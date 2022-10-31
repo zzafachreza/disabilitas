@@ -182,7 +182,7 @@ export default function Register({ navigation }) {
               });
               setData({
                 ...data,
-                level: 'Disabiitas'
+                level: 'Disabilitas'
               });
 
 
@@ -357,7 +357,7 @@ export default function Register({ navigation }) {
 
         <MyGap jarak={10} />
         <MyInput
-          label="Telepon"
+          label="Telepon / Whatsapp ( Contoh +62812345678 )"
           keyboardType="phone-pad"
           iconname="logo-whatsapp"
           placeholder="Masukan telepon"
@@ -448,19 +448,7 @@ export default function Register({ navigation }) {
 
         )}
 
-        <MyGap jarak={10} />
-        <MyInput
-          label="Username"
-          iconname="at-outline"
-          placeholder="Masukan username"
-          value={data.username}
-          onChangeText={x =>
-            setData({
-              ...data,
-              username: x,
-            })
-          }
-        />
+
 
         <MyGap jarak={10} />
         <MyInput

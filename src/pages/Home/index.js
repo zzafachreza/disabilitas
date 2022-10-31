@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  Alert,
 } from 'react-native';
 import { colors } from '../../utils/colors';
 import { fonts } from '../../utils/fonts';
@@ -22,11 +23,12 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import LottieView from 'lottie-react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { MyGap } from '../../components';
+import { MyButton, MyGap } from '../../components';
 
 export default function Home({ navigation }) {
   const [user, setUser] = useState({});
   const [relawan, setRelawan] = useState([]);
+  const [bantuan, setBantuan] = useState([]);
   const [cart, setCart] = useState(0);
   const [token, setToken] = useState('');
 
@@ -53,29 +55,40 @@ export default function Home({ navigation }) {
     //   });
     // });
 
-    __getrelawan();
+
 
     if (isFocused) {
+      __getrelawan();
       __getDataUserInfo();
+      __getBantuan();
     }
     // return unsubscribe;
   }, [isFocused]);
 
 
   const __getrelawan = () => {
-    axios.post(urlAPI + '/1data_relawan.php').then(res => {
-      console.warn('data relawan', res.data);
+    axios.post(urlAPI + '/1data_relawan.php', {
+      fid_user: user.id
+    }).then(res => {
       setRelawan(res.data)
+    })
+  }
+
+
+  const __getBantuan = () => {
+    axios.post(urlAPI + '/1data_bantuan.php', {
+      fid_relawan: user.id
+    }).then(res => {
+      console.warn('data bantuan', res.data);
+      setBantuan(res.data)
     })
   }
 
 
   const __getDataUserInfo = () => {
     getData('user').then(users => {
-      console.log(users);
       setUser(users);
       getData('token').then(res => {
-        console.log('data token,', res);
         setToken(res.token);
         axios
           .post(urlAPI + '/update_token.php', {
@@ -83,7 +96,7 @@ export default function Home({ navigation }) {
             token: res.token,
           })
           .then(res => {
-            console.error('update token', res.data);
+            // console.error('update token', res.data);
           });
       });
     });
@@ -148,14 +161,30 @@ export default function Home({ navigation }) {
         flex: 1,
         paddingLeft: 10,
       }}>
-        <Text
-          style={{
-            fontSize: windowWidth / 30,
-            color: colors.primary,
-            fontFamily: fonts.secondary[600],
-          }}>
-          {item.nama_lengkap}
-        </Text>
+        <View style={{
+          flexDirection: 'row'
+        }}>
+          <Text
+            style={{
+              flex: 1,
+              fontSize: windowWidth / 30,
+              color: colors.primary,
+              fontFamily: fonts.secondary[600],
+            }}>
+            {item.nama_lengkap}
+          </Text>
+          {item.status > 0 && <Text
+            style={{
+              fontSize: windowWidth / 30,
+              color: colors.white,
+              backgroundColor: colors.success,
+              paddingHorizontal: 10,
+              fontFamily: fonts.secondary[600],
+            }}>
+            Terima Bantuan
+          </Text>}
+        </View>
+
         <Text
           style={{
             fontSize: windowWidth / 30,
@@ -172,17 +201,7 @@ export default function Home({ navigation }) {
           }}>
           {item.prodi}
         </Text>
-        {item.id_relawan == user.fid_relawan && <Text
-          style={{
-            fontSize: windowWidth / 30,
-            color: colors.secondary,
-            backgroundColor: colors.primary,
-            padding: 10,
-            textAlign: 'center',
-            fontFamily: fonts.secondary[600],
-          }}>
-          PENDAMPING
-        </Text>}
+
 
 
 
@@ -196,6 +215,139 @@ export default function Home({ navigation }) {
 
 
     </TouchableOpacity >
+  );
+
+
+
+  const __renderItemBantuan = ({ item }) =>
+
+  (
+
+
+
+    <View
+
+      style={{
+        borderRadius: 10,
+        flexDirection: 'row',
+        flex: 1,
+        padding: 10,
+        margin: 5,
+        borderWidth: 1,
+        borderColor: colors.zavalabs2,
+
+      }}>
+      <View style={{
+        flex: 0.3,
+      }}>
+        <Image source={{
+          uri: item.image
+        }} style={{
+          alignSelf: 'center',
+          // resizeMode: 'contain',
+          width: '100%',
+          height: 100,
+          borderRadius: 10,
+
+        }} />
+      </View>
+
+      <View style={{
+        flex: 1,
+        paddingLeft: 10,
+      }}>
+        <View style={{
+          flexDirection: 'row'
+        }}>
+          <Text
+            style={{
+              flex: 1,
+              fontSize: windowWidth / 30,
+              color: colors.primary,
+              fontFamily: fonts.secondary[600],
+            }}>
+            {item.nama_lengkap}
+          </Text>
+
+        </View>
+
+        <Text
+          style={{
+            fontSize: windowWidth / 30,
+            color: colors.border,
+            fontFamily: fonts.secondary[400],
+          }}>
+          {item.tanggal}  {item.jam}
+        </Text>
+        <Text
+          style={{
+            fontSize: windowWidth / 30,
+            color: colors.black,
+            fontFamily: fonts.secondary[400],
+          }}>
+          {item.keterangan}
+        </Text>
+        {item.status == 0 &&
+          <View style={{
+            flexDirection: 'row'
+          }}>
+            <View style={{
+              flex: 1,
+              paddingRight: 5
+
+            }}>
+              <MyButton onPress={() => {
+                const dd = {
+                  fid_user: item.fid_user,
+                  id_bantuan: item.id,
+                  fid_relawan: user.id,
+                  status: 'Tolak'
+                }
+                console.log(dd)
+                axios.post(urlAPI + '/1update_bantuan.php', dd).then(res => {
+                  console.log(res.data)
+                  __getBantuan();
+                })
+              }} warna={colors.danger} Icons="close" title="Tolak" />
+            </View>
+            <View style={{
+              flex: 1,
+              paddingLeft: 5
+            }}>
+              <MyButton onPress={() => {
+                const dd = {
+                  fid_user: item.fid_user,
+                  id_bantuan: item.id,
+                  fid_relawan: user.id,
+                  status: 'Terima'
+                }
+                console.log(dd)
+
+
+
+                axios.post(urlAPI + '/1update_bantuan.php', dd).then(res => {
+                  console.log(res.data);
+                  __getBantuan();
+
+                  Alert.alert('Pendampingan Disabilitas FAI-UIKA', 'Terima kasih sudah menerima bantuan')
+                })
+              }} warna={colors.primary} Icons="shield-checkmark-outline" title="Terima" />
+            </View>
+          </View>
+
+        }
+
+
+      </View>
+
+
+
+
+
+
+
+
+    </View >
   );
 
 
@@ -256,6 +408,8 @@ export default function Home({ navigation }) {
       <ScrollView>
         <MyGap jarak={10} />
         <MyCarouser />
+
+        {user.level == 'Disabilitas' && <View style={{ paddingHorizontal: 10, }}><MyButton onPress={() => navigation.navigate('Akses')} colorText={colors.primary} iconColor={colors.primary} Icons="cloud-upload-outline" title="Bantuan Relawan" warna={colors.secondary} /></View>}
 
         <View style={{
           marginVertical: 20,
@@ -350,6 +504,39 @@ export default function Home({ navigation }) {
 
 
               <FlatList data={relawan} renderItem={__renderItem} />
+            </View>
+          </>}
+
+
+        {user.level === "Relawan" &&
+          <>
+            <View style={{
+              padding: 10,
+              marginTop: 0,
+              flexDirection: 'row'
+            }}>
+              <Text style={{
+                color: colors.black,
+                fontFamily: fonts.secondary[600],
+                fontSize: windowWidth / 25,
+              }}>Perlu bantuan relawan</Text>
+              <View style={{
+                flex: 1,
+                paddingTop: 11,
+              }}>
+                <View style={{
+                  borderTopColor: colors.black,
+                  marginHorizontal: 10,
+                  borderTopWidth: 1,
+                }} />
+              </View>
+            </View>
+            <View style={{
+              flex: 1
+            }}>
+
+
+              <FlatList data={bantuan} renderItem={__renderItemBantuan} />
             </View>
           </>}
 

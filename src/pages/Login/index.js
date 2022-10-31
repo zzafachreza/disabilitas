@@ -29,7 +29,7 @@ export default function Login({ navigation }) {
   const [show, setShow] = useState(true);
   const [token, setToken] = useState('');
   const [data, setData] = useState({
-    username: '',
+    npm: '',
     password: '',
   });
 
@@ -42,13 +42,13 @@ export default function Login({ navigation }) {
 
   // login ok
   const masuk = () => {
-    if (data.username.length === 0 && data.password.length === 0) {
+    if (data.npm.length === 0 && data.password.length === 0) {
       showMessage({
-        message: 'Maaf username dan Password masih kosong !',
+        message: 'Maaf npm dan Password masih kosong !',
       });
-    } else if (data.username.length === 0) {
+    } else if (data.npm.length === 0) {
       showMessage({
-        message: 'Maaf username masih kosong !',
+        message: 'Maaf npm masih kosong !',
       });
     } else if (data.password.length === 0) {
       showMessage({
@@ -117,14 +117,14 @@ export default function Login({ navigation }) {
 
           <MyGap jarak={20} />
           <MyInput
-            label="username"
-            iconname="at-outline"
-            placeholder="Masukan username"
-            value={data.username}
+            label="npm"
+            iconname="card-outline"
+            placeholder="Masukan npm"
+            value={data.npm}
             onChangeText={value =>
               setData({
                 ...data,
-                username: value,
+                npm: value,
               })
             }
           />

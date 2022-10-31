@@ -706,7 +706,7 @@ export default function Router() {
         name="Akses"
         component={Akses}
         options={({ route, navigation }) => ({
-          title: 'Lacak Resi Pesanan',
+          title: 'Perihal',
           headerTintColor: 'white',
           headerShown: true,
           headerStyle: {

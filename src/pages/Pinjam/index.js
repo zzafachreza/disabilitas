@@ -117,7 +117,7 @@ export default function Pinjam({ navigation, route }) {
         <Image
 
           style={{
-            height: windowHeight / 2,
+            height: windowHeight / 2.5,
             width: windowWidth
           }}
           source={{
@@ -175,7 +175,33 @@ export default function Pinjam({ navigation, route }) {
                   fontFamily: fonts.secondary[400],
                   color: colors.primary,
                 }}>
-                {user.email}
+                {item.email}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                marginVertical: 3,
+                backgroundColor: colors.white,
+                borderRadius: 10,
+                borderBottomWidth: 1,
+                borderBottomColor: colors.zavalabs,
+                flexDirection: 'row'
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[600],
+                  color: colors.black,
+                  flex: 1,
+                }}>
+                NPM
+              </Text>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[400],
+                  color: colors.primary,
+                }}>
+                {item.npm}
               </Text>
             </View>
 
@@ -282,6 +308,87 @@ export default function Pinjam({ navigation, route }) {
                 {user.alamat}
               </Text>
             </View>
+            <View
+              style={{
+                marginVertical: 3,
+                backgroundColor: colors.white,
+                borderRadius: 10,
+                borderBottomWidth: 1,
+                borderBottomColor: colors.zavalabs,
+                flexDirection: 'row'
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[600],
+                  color: colors.black,
+                  flex: 1,
+                }}>
+                Kemampuan Bahasa Inggris
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: 'right',
+                  fontFamily: fonts.secondary[400],
+                  color: colors.primary,
+                }}>
+                {item.bahasa_inggris}
+              </Text>
+            </View>
+            <View
+              style={{
+                marginVertical: 3,
+                backgroundColor: colors.white,
+                borderRadius: 10,
+                borderBottomWidth: 1,
+                borderBottomColor: colors.zavalabs,
+                flexDirection: 'row'
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[600],
+                  color: colors.black,
+                  flex: 1,
+                }}>
+                Kemampuan Bahasa Arab
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: 'right',
+                  fontFamily: fonts.secondary[400],
+                  color: colors.primary,
+                }}>
+                {item.bahasa_arab}
+              </Text>
+            </View>
+            <View
+              style={{
+                marginVertical: 3,
+                backgroundColor: colors.white,
+                borderRadius: 10,
+                borderBottomWidth: 1,
+                borderBottomColor: colors.zavalabs,
+                flexDirection: 'row'
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.secondary[600],
+                  color: colors.black,
+                  flex: 1,
+                }}>
+                Motivasi
+              </Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: 'right',
+                  fontFamily: fonts.secondary[400],
+                  color: colors.primary,
+                }}>
+                {item.motivasi}
+              </Text>
+            </View>
 
 
 
@@ -296,7 +403,7 @@ export default function Pinjam({ navigation, route }) {
 
 
 
-      {item.id_relawan == user.fid_relawan && <MyButton
+      {item.status == 1 && <MyButton
         Icons="logo-whatsapp"
         fontWeight="bold"
         radius={0}
@@ -307,14 +414,14 @@ export default function Pinjam({ navigation, route }) {
         onPress={() => Linking.openURL('https://wa.me/' + item.telepon)}
       />}
 
-      {item.id_relawan != user.fid_relawan && <MyButton
+      {/* {item.status == 0 && <MyButton
         Icons="person-add-outline"
         fontWeight="bold"
         radius={0}
         title="Pilih sebagai pendamping"
         warna={colors.primary}
         onPress={onOpen}
-      />}
+      />} */}
 
 
 

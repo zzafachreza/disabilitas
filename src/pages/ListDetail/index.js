@@ -21,6 +21,7 @@ import PushNotification from 'react-native-push-notification';
 import { urlAPI, urlLaporan } from '../../utils/localStorage';
 import { MyButton, MyGap } from '../../components';
 import { useIsFocused } from '@react-navigation/native';
+import YoutubePlayer from "react-native-youtube-iframe";
 export default function ListDetail({ navigation, route }) {
   const [item, setItem] = useState(route.params);
   navigation.setOptions({ title: 'Kegiatan Relawan' });
@@ -66,6 +67,12 @@ export default function ListDetail({ navigation, route }) {
             textAlign: 'justify',
           }}>{item.keterangan}</Text>
         </View>
+
+        <YoutubePlayer
+          height={windowWidth}
+          videoId={item.link}
+
+        />
 
       </ScrollView>
 

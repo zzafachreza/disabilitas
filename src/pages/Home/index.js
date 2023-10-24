@@ -287,55 +287,55 @@ export default function Home({ navigation }) {
           }}>
           {item.keterangan}
         </Text>
-        {item.status == 0 &&
+
+        <View style={{
+          flexDirection: 'row'
+        }}>
           <View style={{
-            flexDirection: 'row'
+            flex: 1,
+            paddingRight: 5
+
           }}>
-            <View style={{
-              flex: 1,
-              paddingRight: 5
-
-            }}>
-              <MyButton onPress={() => {
-                const dd = {
-                  fid_user: item.fid_user,
-                  id_bantuan: item.id,
-                  fid_relawan: user.id,
-                  status: 'Tolak'
-                }
-                console.log(dd)
-                axios.post(urlAPI + '/1update_bantuan.php', dd).then(res => {
-                  console.log(res.data)
-                  __getBantuan();
-                })
-              }} warna={colors.danger} Icons="close" title="Tolak" />
-            </View>
-            <View style={{
-              flex: 1,
-              paddingLeft: 5
-            }}>
-              <MyButton onPress={() => {
-                const dd = {
-                  fid_user: item.fid_user,
-                  id_bantuan: item.id,
-                  fid_relawan: user.id,
-                  status: 'Terima'
-                }
-                console.log(dd)
-
-
-
-                axios.post(urlAPI + '/1update_bantuan.php', dd).then(res => {
-                  console.log(res.data);
-                  __getBantuan();
-
-                  Alert.alert('Pendampingan Disabilitas FAI-UIKA', 'Terima kasih sudah menerima bantuan')
-                })
-              }} warna={colors.primary} Icons="shield-checkmark-outline" title="Terima" />
-            </View>
+            <MyButton onPress={() => {
+              const dd = {
+                fid_user: item.fid_user,
+                id_bantuan: item.id,
+                fid_relawan: user.id,
+                status: 'Tolak'
+              }
+              console.log(dd)
+              axios.post(urlAPI + '/1update_bantuan.php', dd).then(res => {
+                console.log(res.data)
+                __getBantuan();
+              })
+            }} warna={colors.danger} Icons="close" title="Tolak" />
           </View>
+          <View style={{
+            flex: 1,
+            paddingLeft: 5
+          }}>
+            <MyButton onPress={() => {
+              const dd = {
+                fid_user: item.fid_user,
+                id_bantuan: item.id,
+                fid_relawan: user.id,
+                status: 'Terima'
+              }
+              console.log(dd)
 
-        }
+
+
+              axios.post(urlAPI + '/1update_bantuan.php', dd).then(res => {
+                console.log(res.data);
+                __getBantuan();
+
+                Alert.alert('Pendampingan Disabilitas FAI-UIKA', 'Terima kasih sudah menerima bantuan')
+              })
+            }} warna={colors.primary} Icons="shield-checkmark-outline" title="Terima" />
+          </View>
+        </View>
+
+
 
 
       </View>

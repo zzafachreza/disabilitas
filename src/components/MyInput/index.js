@@ -62,6 +62,7 @@ export default function MyInput({
           keyboardType={keyboardType}
           value={value}
           onChangeText={onChangeText}
+          placeholderTextColor={colors.border}
           autoCapitalize="none"
           style={{
             backgroundColor: colors.zavalabs,
